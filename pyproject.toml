@@ -1,0 +1,29 @@
+[tool.poetry]
+name = "notebridge"
+version = "0.0.1"
+description = "Notebridge is a tool to connect NoteAid app to your user-defined agent."
+authors = ["Lingxi Li <hi@lingxi.li>"]
+license = "MIT"
+readme = "README.md"
+packages = [
+    { include = "notebridge" },
+]
+homepage = "https://notebridge.lingxi.li/"
+repository = "https://github.com/lilingxi01/notebridge"
+
+[tool.poetry.dependencies]
+python = ">=3.8,<4"
+requests = "^2.31.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.2.1"
+sphinx = "^6.2.1"
+sphinx-autobuild = "^2021.3.14"
+myst-parser = "^2.0.0"
+sphinx-book-theme = "^1.0.1"
+sphinx-favicon = "^1.0.1"
+sphinx-copybutton = "^0.5.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
