@@ -1,15 +1,16 @@
 from abc import ABC, abstractmethod
 from typing import Optional, List, Union
+from pydantic import BaseModel
 
 
-class ChatMessage:
+class ChatMessage(BaseModel):
     is_agent: bool = False
     agent_name: Optional[str] = None
     content: str = None
     timestamp: int = None
 
 
-class ChatContext:
+class ChatContext(BaseModel):
     note: Optional[str] = None
     # TODO: Related notes of the same patient.
     # TODO: More structural information about the patient.
