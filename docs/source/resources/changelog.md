@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.2.1 (Sep 5, 2023)
+* [Fix] Some import issues.
+* [Fix] Optimized the naming convention of the adapter function.
+
 ## v0.2.0 (Sep 5, 2023)
 * [Add] Integrated agent adapter handler for agent template.
 

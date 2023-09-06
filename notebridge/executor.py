@@ -3,10 +3,13 @@ import logging
 
 from pydantic import ValidationError
 
-from notebridge import ChatMessage, ChatContext, Bridge
+from .bridge import ChatMessage, ChatContext, Bridge
 
 
-def handler(agent: Bridge):
+def make_executor(agent: Bridge):
+    """
+    This function is used to create an executor function that can be used as a Lambda handler.
+    """
     def inner_adapter(event, context):
         if 'message_stack' not in event or type(event['message_stack']) != list:
             return {
