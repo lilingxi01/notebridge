@@ -11,7 +11,17 @@ def make_executor(agent: Bridge):
     This function is used to create an executor function that can be used as a Lambda handler.
     """
     def inner_adapter(event, context):
-        if 'message_stack' not in event or type(event['message_stack']) != list:
+        if 'body' not in event:
+            return {
+                "statusCode": 400,
+                "body": json.dumps({
+                    "message": "Request body is missing."
+                })
+            }
+
+        body = json.loads(event['body'])
+
+        if 'message_stack' not in body or type(body['message_stack']) != list:
             return {
                 "statusCode": 400,
                 "body": json.dumps({
@@ -19,7 +29,7 @@ def make_executor(agent: Bridge):
                 })
             }
 
-        if 'context' not in event or type(event['context']) != dict:
+        if 'context' not in body or type(body['context']) != dict:
             return {
                 "statusCode": 400,
                 "body": json.dumps({
@@ -28,8 +38,8 @@ def make_executor(agent: Bridge):
             }
 
         try:
-            message_stack = [ChatMessage(**m) for m in event['message_stack']]
-            context = ChatContext(**event['context'])
+            message_stack = [ChatMessage(**m) for m in body['message_stack']]
+            context = ChatContext(**body['context'])
         except ValidationError as e:
             logging.error(f"Error occurred while parsing the request: {str(e)}")
             return {
