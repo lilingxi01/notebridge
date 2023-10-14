@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Optional, List, Union
+from typing import Optional, List
 from pydantic import BaseModel
 
 
@@ -11,14 +11,23 @@ class ChatMessage(BaseModel):
 
 
 class ChatContext(BaseModel):
+    chat_session_id: str = None
     note: Optional[str] = None
     # TODO: Related notes of the same patient.
     # TODO: More structural information about the patient.
 
 
+class AgentResponse(BaseModel):
+    messages: List[str] = []
+    storage: dict = None
+
+
 class Bridge(ABC):
     @abstractmethod
-    def on_receive(self, message_stack: List[ChatMessage], context: ChatContext) -> Union[str, List[str]]:
+    def on_receive(self,
+                   message_stack: List[ChatMessage],
+                   context: ChatContext,
+                   storage: dict) -> AgentResponse:
         """
         The callback function when the agent receives a message.
 
@@ -28,11 +37,14 @@ class Bridge(ABC):
             The message stack that contains all the messages in the chat, where the last item is the new message.
         context : ChatContext
             The context of the conversation.
+        storage : dict
+            The storage of the agent. It is a dictionary that can be used to store any information.
+            The dictionary will be passed based on the chat session id.
 
         Returns
         -------
-        Union[str, List[str]]
-            The response of the agent. It could be one message (string) or a list of messages (list of strings).
+        AgentResponse
+            The response of the agent. It includes a list of messages and the dictionary to be stored.
 
         """
         pass

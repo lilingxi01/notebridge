@@ -19,7 +19,7 @@ def make_executor(agent: Bridge):
                 })
             }
 
-        body = json.loads(event['body'])
+        body = event['body']
 
         if 'message_stack' not in body or type(body['message_stack']) != list:
             return {
@@ -40,6 +40,7 @@ def make_executor(agent: Bridge):
         try:
             message_stack = [ChatMessage(**m) for m in body['message_stack']]
             context = ChatContext(**body['context'])
+            storage = body['storage'] if 'storage' in body else dict()
         except ValidationError as e:
             logging.error(f"Error occurred while parsing the request: {str(e)}")
             return {
@@ -49,12 +50,14 @@ def make_executor(agent: Bridge):
                 })
             }
 
-        response = agent.on_receive(message_stack=message_stack, context=context)
+        response = agent.on_receive(message_stack=message_stack, context=context, storage=storage)
 
+        # TODO: We might want to make responses async in future versions.
         return {
             "statusCode": 200,
             "body": json.dumps({
-                "response": response
+                "response": response.messages,
+                "storage": response.storage
             })
         }
 
