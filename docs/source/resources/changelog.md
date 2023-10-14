@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.3.2 (Oct 14, 2023)
+* [Fix] Module exposure issue.
+
 ## v0.3.1 (Oct 14, 2023)
 * [Add] Add support for chat session based storage.
 * [Fix] Support http protocol for Serverless framework.
