@@ -11,6 +11,7 @@ Notebridge is an adapter library lying between your NoteAid agent and the actual
 :maxdepth: 3
 
 get-started
+example-usage
 ```
 
 ```{toctree}

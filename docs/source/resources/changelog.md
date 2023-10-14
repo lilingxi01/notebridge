@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.3.1 (Oct 14, 2023)
+* [Add] Add support for chat session based storage.
+* [Fix] Support http protocol for Serverless framework.
+
+## v0.2.2 (Sep 6, 2023)
+* [Fix] Resolve body mapping.
+
 ## v0.2.1 (Sep 5, 2023)
 * [Fix] Some import issues.
 * [Fix] Optimized the naming convention of the adapter function.

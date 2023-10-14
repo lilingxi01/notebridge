@@ -4,7 +4,7 @@
 
 ### Come with template
 
-The suggested way to get Notebridge is via our agent template. Notebridge should be included by default in the template, so you don't need to actually install it.
+The suggested way to get Notebridge is via [our agent template](https://github.com/lilingxi01/noteaid-agent-template). Notebridge should be included by default in the template, so you don't need to actually install it.
 
 ### Via PyPI
 
