@@ -1,7 +1,7 @@
-import json
 import logging
 
 from pydantic import ValidationError
+from flask import jsonify, request
 
 from .bridge import ChatMessage, ChatContext, Bridge
 
@@ -10,32 +10,17 @@ def make_executor(agent: Bridge):
     """
     This function is used to create an executor function that can be used as a Lambda handler.
     """
-    def inner_adapter(event, context):
-        if 'body' not in event:
-            return {
-                "statusCode": 400,
-                "body": json.dumps({
-                    "message": "Request body is missing."
-                })
-            }
+    def inner_adapter():
+        body = request.get_json()
 
-        body = event['body']
+        if body is None:
+            return jsonify(error="Missing JSON parameters"), 400
 
         if 'message_stack' not in body or type(body['message_stack']) != list:
-            return {
-                "statusCode": 400,
-                "body": json.dumps({
-                    "message": "Message stack (message_stack) is invalid from the request."
-                })
-            }
+            return jsonify(error="Message stack (message_stack) is invalid from the request."), 400
 
         if 'context' not in body or type(body['context']) != dict:
-            return {
-                "statusCode": 400,
-                "body": json.dumps({
-                    "message": "Context (context) is invalid from the request."
-                })
-            }
+            return jsonify(error="Context (context) is invalid from the request."), 400
 
         try:
             message_stack = [ChatMessage(**m) for m in body['message_stack']]
@@ -43,22 +28,14 @@ def make_executor(agent: Bridge):
             storage = body['storage'] if 'storage' in body else dict()
         except ValidationError as e:
             logging.error(f"Error occurred while parsing the request: {str(e)}")
-            return {
-                "statusCode": 400,
-                "body": json.dumps({
-                    "message": f"Invalid message_stack or context structure: {str(e)}"
-                })
-            }
+            return jsonify(error="Invalid JSON parameters"), 400
 
         response = agent.on_receive(message_stack=message_stack, context=context, storage=storage)
 
         # TODO: We might want to make responses async in future versions.
-        return {
-            "statusCode": 200,
-            "body": json.dumps({
-                "response": response.messages,
-                "storage": response.storage
-            })
-        }
+        return jsonify({
+            "response": response.messages,
+            "storage": response.storage
+        })
 
     return inner_adapter
