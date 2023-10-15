@@ -1,6 +1,6 @@
 # Changelog
 
-## v0.5.1 (Oct 15, 2023)
+## v0.5.3 (Oct 15, 2023)
 * [Fix] Optimize hello message content.
 
 ## v0.5.0 (Oct 15, 2023)
