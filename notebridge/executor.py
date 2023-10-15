@@ -4,6 +4,7 @@ from pydantic import ValidationError
 from flask import jsonify, request
 
 from .bridge import ChatMessage, ChatContext, Bridge
+from .hello_page import hello_page_html
 
 
 def make_executor(agent: Bridge):
@@ -11,6 +12,9 @@ def make_executor(agent: Bridge):
     This function is used to create an executor function that can be used as a Lambda handler.
     """
     def inner_adapter():
+        if request.method == 'GET':
+            return hello_page_html
+
         body = request.get_json()
 
         if body is None:

@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.5.1 (Oct 15, 2023)
+* [Fix] Optimize hello message content.
+
+## v0.5.0 (Oct 15, 2023)
+* [Add] Add hello message support for GET endpoint.
+* [Fix] Minor deployment issues.
+
+## v0.4.0 (Oct 15, 2023)
+* [Add] Use Slask as our base architecture.
+
 ## v0.3.2 (Oct 14, 2023)
 * [Fix] Module exposure issue.
 
