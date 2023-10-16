@@ -12,6 +12,9 @@ def make_executor(agent: Bridge):
     This function is used to create an executor function that can be used as a Lambda handler.
     """
     def inner_adapter():
+        if request.method == 'OPTIONS':
+            return 'ok', 200
+
         if request.method == 'GET':
             return hello_page_html
 

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "notebridge"
-version = "0.5.3"
+version = "0.5.4"
 description = "Notebridge is a tool to connect NoteAid app to your user-defined agent."
 authors = ["Lingxi Li <hi@lingxi.li>"]
 license = "MIT"
